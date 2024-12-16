@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>צ'אט עם מטפלת</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">בייבי בוס</div>
+    <ul class="nav-links">
+      <li><a href="index.html">דף הבית</a></li>
+      <li><a href="login.html">התחברות</a></li>
+      <li><a href="apply.html">בקשה להצטרפות כמטפלת</a></li>
+    </ul>
+  </nav>
+
+  <section class="contact-chat-section">
+    <div class="contact-info">
+      <img id="babysitterImg" src="" alt="תמונת מטפלת" />
+      <div class="contact-details">
+        <h2 id="babysitterName">שם המטפלת</h2>
+        <p id="babysitterPhone">טלפון: ...</p>
+        <p id="babysitterEmail">אימייל: ...</p>
+        <p id="babysitterAge">גיל: ...</p>
+        <p id="babysitterStreet">רחוב: ...</p>
+      </div>
+    </div>
+
+    <div class="chat-container">
+      <div id="chatMessages" class="chat-messages"></div>
+      <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="כתוב הודעה..." />
+        <button id="sendMsgBtn">שלח</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Retrieve data from sessionStorage
+      const name = sessionStorage.getItem("babysitterName") || "אין שם";
+      const phone = sessionStorage.getItem("babysitterPhone") || "אין טלפון";
+      const email = sessionStorage.getItem("babysitterEmail") || "אין אימייל";
+      const age = sessionStorage.getItem("babysitterAge") || "לא צוין";
+      const street = sessionStorage.getItem("babysitterStreet") || "לא צוין";
+      const imgURL = sessionStorage.getItem("babysitterImg") || "https://via.placeholder.com/150";
+
+      // Populate
+      document.getElementById("babysitterImg").src = imgURL;
+      document.getElementById("babysitterName").textContent = name;
+      document.getElementById("babysitterPhone").textContent = `טלפון: ${phone}`;
+      document.getElementById("babysitterEmail").textContent = `אימייל: ${email}`;
+      document.getElementById("babysitterAge").textContent = `גיל: ${age}`;
+      document.getElementById("babysitterStreet").textContent = `רחוב: ${street}`;
+
+      // Simple chat
+      const chatMessages = document.getElementById("chatMessages");
+      const chatInput = document.getElementById("chatInput");
+      const sendMsgBtn = document.getElementById("sendMsgBtn");
+
+      sendMsgBtn.addEventListener("click", () => {
+        const msg = chatInput.value.trim();
+        if (msg !== "") {
+          const newMsgElem = document.createElement("div");
+          newMsgElem.classList.add("user-message");
+          newMsgElem.textContent = msg;
+          chatMessages.appendChild(newMsgElem);
+          chatInput.value = "";
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
